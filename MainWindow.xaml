@@ -1,0 +1,38 @@
+﻿<Window x:Class="PixelPaint.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800"
+        FontFamily="Poppins Regular">
+    <Border Background="#1D2229">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <WrapPanel Margin="10,10,10,0" >
+                <Button Background="#71BCFC" Width="50" Height="40" Click="ButtonLineClicked">
+                    <Image Source="/assets/line.png"/>
+                </Button>
+                
+                <Button Background="#71BCFC" Width="50" Height="40" Click="ButtonElipseClicked">
+                    <Image Source="/assets/circle.png"/>
+                </Button>
+                
+                <Button Background="#71BCFC" Width="50" Height="40" Click="ButtonRectangleClicked">
+                    <Image Source="/assets/rectangle.png"/>
+                </Button>
+                
+                <Button Background="#71BCFC" Width="50" Height="40" Click="ButtonPencilClicked">
+                    <Image Source="/assets/PENCIL.png"/>
+                </Button>
+
+            </WrapPanel>
+            <Canvas x:Name="workField" Grid.Row="1" Background="White" Margin="10" MouseDown="Canvas_MouseDown" MouseMove="workField_MouseMove" MouseUp="workField_MouseUp"/>
+        </Grid>
+    </Border>
+    
+</Window>
