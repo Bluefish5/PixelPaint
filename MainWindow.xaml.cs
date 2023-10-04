@@ -23,7 +23,7 @@ namespace PixelPaint
         string state = "PENCIL";
         Line line = new Line();
         Ellipse ellipse = new Ellipse();
-        Polygon rectangle = new Polygon();
+        Rectangle rectangle = new Rectangle();
         Point startPoint = new Point();
 
 
@@ -49,11 +49,10 @@ namespace PixelPaint
                     break;
 
                 case "LINE":
-                    line.Width = 1;
                     line.X1 = positon.X;
                     line.Y1 = positon.Y;
-                    Canvas.SetLeft(line, positon.X);
-                    Canvas.SetTop(line, positon.Y);
+                    line.Stroke = Brushes.Black;
+                    workField.Children.Add(line);
                     break;
 
                 case "ELLIPSE":
@@ -92,9 +91,12 @@ namespace PixelPaint
                     break;
 
                 case "LINE":
-                    line.X2 = positon.X;
-                    line.Y2 = positon.Y;
-                    line.Fill = Brushes.Black;
+                    if (System.Windows.Input.Mouse.LeftButton == MouseButtonState.Pressed)
+                    {
+                        line.X2 = positon.X;
+                        line.Y2 = positon.Y;
+                        line.Fill = Brushes.Black;
+                    }
                     break;
 
                 case "ELLIPSE":
@@ -121,9 +123,6 @@ namespace PixelPaint
             switch (state)
             {
                 case "LINE":
-                    line.StrokeThickness = 100;
-                    line.Stroke = Brushes.Black;
-                    workField.Children.Add(line);
                     line = new Line();
                     break;
 
@@ -132,7 +131,7 @@ namespace PixelPaint
                     break;
 
                 case "RECTANGLE":
-                    rectangle = new Polygon();
+                    rectangle = new Rectangle();
                 break;
 
                 default: break;
