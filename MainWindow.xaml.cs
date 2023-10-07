@@ -27,10 +27,57 @@ namespace PixelPaint
         Rectangle rectangle = new Rectangle();
         Point startPoint = new Point();
 
+        Ellipse leftUpEdit = new Ellipse();
+        Ellipse leftDownEdit = new Ellipse();
+        Ellipse rightUpEdit = new Ellipse();
+        Ellipse rightDownEdit = new Ellipse();
+
+        Rectangle frameEdit = new Rectangle();
+
+        bool inEdition = false;
+
+
 
         public MainWindow()
         {
             InitializeComponent();
+
+            leftUpEdit.Stroke = Brushes.LightGray;
+            leftUpEdit.Fill = Brushes.MediumSeaGreen;
+            leftUpEdit.Width = 20;
+            leftUpEdit.Height = 20;
+            workField.Children.Add(leftUpEdit);
+            leftUpEdit.Visibility = Visibility.Hidden;
+
+            leftDownEdit.Stroke = Brushes.LightGray;
+            leftDownEdit.Fill = Brushes.MediumSeaGreen;
+            leftDownEdit.Width = 20;
+            leftDownEdit.Height = 20;
+            workField.Children.Add(leftDownEdit);
+            leftDownEdit.Visibility = Visibility.Hidden;
+
+            rightUpEdit.Stroke = Brushes.LightGray;
+            rightUpEdit.Fill = Brushes.MediumSeaGreen;
+            rightUpEdit.Width = 20;
+            rightUpEdit.Height = 20;
+            workField.Children.Add(rightUpEdit);
+            rightUpEdit.Visibility = Visibility.Hidden;
+
+            rightDownEdit.Stroke = Brushes.LightGray;
+            rightDownEdit.Fill = Brushes.MediumSeaGreen;
+            rightDownEdit.Width = 20;
+            rightDownEdit.Height = 20;
+            workField.Children.Add(rightDownEdit);
+            rightDownEdit.Visibility = Visibility.Hidden;
+
+            
+            frameEdit.Stroke = Brushes.DarkGray;
+            frameEdit.StrokeThickness = 2;
+            frameEdit.StrokeDashArray = new DoubleCollection() { 3, 6 };
+            workField.Children.Add(frameEdit);
+            frameEdit.Visibility = Visibility.Hidden;
+
+
         }
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
@@ -57,10 +104,14 @@ namespace PixelPaint
                     break;
 
                 case "ELLIPSE":
-                    ellipse.Stroke = Brushes.Black;
-                    Canvas.SetLeft(ellipse, positon.X);
-                    Canvas.SetTop(ellipse, positon.Y);
-                    workField.Children.Add(ellipse);
+                    if (!inEdition)
+                    {
+                        ellipse.Stroke = Brushes.Black;
+                        Canvas.SetLeft(ellipse, positon.X);
+                        Canvas.SetTop(ellipse, positon.Y);
+                        workField.Children.Add(ellipse);
+                        inEdition = true;
+                    }
                     break;
                 case "RECTANGLE":
                     rectangle.Stroke = Brushes.Black;
@@ -124,15 +175,35 @@ namespace PixelPaint
             switch (state)
             {
                 case "LINE":
-                    line = new Line();
                     break;
 
                 case "ELLIPSE":
-                    ellipse = new Ellipse();
+                    Canvas.SetLeft(frameEdit, Canvas.GetLeft(ellipse));
+                    Canvas.SetTop(frameEdit, Canvas.GetTop(ellipse));
+                    frameEdit.Width = ellipse.Width;
+                    frameEdit.Height = ellipse.Height;
+                    frameEdit.Visibility = Visibility.Visible;
+
+                    Canvas.SetLeft(leftUpEdit, Canvas.GetLeft(ellipse) - 10);
+                    Canvas.SetTop(leftUpEdit , Canvas.GetTop(ellipse) - 10);
+                    leftUpEdit.Visibility = Visibility.Visible;
+
+                    Canvas.SetLeft(rightUpEdit, Canvas.GetLeft(ellipse) + ellipse.Width - 10);
+                    Canvas.SetTop(rightUpEdit, Canvas.GetTop(ellipse) - 10);
+                    rightUpEdit.Visibility = Visibility.Visible;
+
+                    Canvas.SetLeft(leftDownEdit, Canvas.GetLeft(ellipse) - 10);
+                    Canvas.SetTop(leftDownEdit, Canvas.GetTop(ellipse)+ ellipse.Height - 10);
+                    leftDownEdit.Visibility = Visibility.Visible;
+
+                    Canvas.SetLeft(rightDownEdit, Canvas.GetLeft(ellipse) + ellipse.Width - 10);
+                    Canvas.SetTop(rightDownEdit, Canvas.GetTop(ellipse) + ellipse.Height - 10);
+                    rightDownEdit.Visibility = Visibility.Visible;
+
                     break;
 
                 case "RECTANGLE":
-                    rectangle = new Rectangle();
+                    
                 break;
 
                 default: break;
