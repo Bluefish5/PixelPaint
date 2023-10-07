@@ -3,36 +3,83 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:PixelPaint.ViewModels"
+        xmlns:views="clr-namespace:PixelPaint.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800"
         FontFamily="Poppins Regular">
-    <Border Background="#1D2229">
-        <Grid>
+
+    <Window.Resources>
+        <DataTemplate x:Name="LineSettingTemplate" DataType="{x:Type viewmodels:LineSettingModel}">
+            <views:LineSetting DataContext="{Binding}"/>
+        </DataTemplate>
+
+    </Window.Resources>
+    <Border>
+        <Grid Background="#363D4A">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition Height="10*"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
-            <WrapPanel Margin="10,10,10,0" >
-                <Button Background="#71BCFC" Width="50" Height="40" Click="ButtonLineClicked">
-                    <Image Source="/assets/line.png"/>
-                </Button>
-                
-                <Button Background="#71BCFC" Width="50" Height="40" Click="ButtonElipseClicked">
-                    <Image Source="/assets/circle.png"/>
-                </Button>
-                
-                <Button Background="#71BCFC" Width="50" Height="40" Click="ButtonRectangleClicked">
-                    <Image Source="/assets/rectangle.png"/>
-                </Button>
-                
-                <Button Background="#71BCFC" Width="50" Height="40" Click="ButtonPencilClicked">
-                    <Image Source="/assets/PENCIL.png"/>
-                </Button>
+            <WrapPanel>
+
+                <StackPanel>
+
+                    <Label Content="Narzędzia" Foreground="White" HorizontalAlignment="Center"/>
+
+                    <Button Background="Transparent" BorderThickness="0" Width="30" Height="30" Click="ButtonPencilClicked">
+                        <Image Source="/assets/PENCIL.png"/>
+                    </Button>
+
+                </StackPanel>
+
+                <Separator Width="100">
+                    <Separator.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </Separator.LayoutTransform>
+                </Separator>
+
+                <StackPanel>
+
+                    <Label Content="Kształty" Foreground="White" HorizontalAlignment="Center"/>
+
+                    <WrapPanel>
+
+                        <Button Background="Transparent" BorderThickness="0" Width="30" Height="30" Click="ButtonElipseClicked">
+                            <Image Source="/assets/circle.png"/>
+                        </Button>
+
+                        <Button Background="Transparent" BorderThickness="0" Width="30" Height="30" Click="ButtonRectangleClicked">
+                            <Image Source="/assets/rectangle.png"/>
+                        </Button>
+
+                        
+
+                        <Button Background="Transparent" BorderThickness="0" Width="30" Height="30" Click="ButtonLineClicked">
+                            <Image Source="/assets/line.png"/>
+                        </Button>
+
+                    </WrapPanel>
+
+                    
+
+                </StackPanel>
+
+                <Separator >
+                    <Separator.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </Separator.LayoutTransform>
+                </Separator>
+
+
+                <ContentControl Panel.ZIndex="2"  Content="{Binding}"/>
+
 
             </WrapPanel>
-            <Canvas x:Name="workField" Grid.Row="1" Background="White" Margin="10" MouseDown="Canvas_MouseDown" MouseMove="workField_MouseMove" MouseUp="workField_MouseUp"/>
+            <Canvas x:Name="workField" Grid.Row="1" Background="White" Margin="10,0" MouseDown="Canvas_MouseDown" MouseMove="workField_MouseMove" MouseUp="workField_MouseUp"/>
         </Grid>
+        
     </Border>
     
 </Window>
