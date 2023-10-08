@@ -16,7 +16,7 @@
 
     </Window.Resources>
     <Border>
-        <Grid Background="#363D4A">
+        <Grid x:Name="mainWindow" Background="#363D4A">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="10*"/>
