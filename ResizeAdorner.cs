@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace PixelPaint
 {
@@ -16,6 +18,7 @@ namespace PixelPaint
         VisualCollection AdornerVisuals;
         
         Thumb thumb1, thumb2;
+        Rectangle dotedRectangle;
         public ResizeAdorner(UIElement adornedElement) : base(adornedElement)
         {
             AdornerVisuals = new VisualCollection(adornedElement);
@@ -23,13 +26,15 @@ namespace PixelPaint
 
             thumb1 = new Thumb() { Background = Brushes.ForestGreen,Height = 20,Width = 20};
             thumb2 = new Thumb() { Background = Brushes.ForestGreen, Height = 20, Width = 20 };
+            dotedRectangle = new Rectangle() { Stroke = Brushes.DarkGray,StrokeThickness = 2,StrokeDashArray = {6,2} };
 
             thumb1.DragDelta += Thumb1_DragDelta;
             thumb2.DragDelta += Thumb2_DragDelta;
 
             AdornerVisuals.Add(thumb1);
             AdornerVisuals.Add(thumb2);
-            
+            AdornerVisuals.Add(dotedRectangle);
+
 
         }
 
@@ -64,7 +69,8 @@ namespace PixelPaint
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            thumb1.Arrange(new Rect(0, 0, 10, 10));
+            dotedRectangle.Arrange(new Rect(-2.5, -2, AdornedElement.DesiredSize.Width + 5, AdornedElement.DesiredSize.Height + 5));
+            thumb1.Arrange(new Rect(-10, -10, 10, 10));
             thumb2.Arrange(new Rect(AdornedElement.DesiredSize.Width, AdornedElement.DesiredSize.Height, 10, 10));
             return base.ArrangeOverride(finalSize);
         }

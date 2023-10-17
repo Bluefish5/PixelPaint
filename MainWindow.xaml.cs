@@ -27,6 +27,8 @@ namespace PixelPaint
         Rectangle rectangle = new Rectangle();
         Point startPoint = new Point();
 
+        ResizeAdorner adornerToRemove;
+
         bool inEdition = false;
 
 
@@ -54,10 +56,13 @@ namespace PixelPaint
                     break;
 
                 case "LINE":
-                    line.X1 = positon.X;
-                    line.Y1 = positon.Y;
-                    line.Stroke = Brushes.Black;
-                    workField.Children.Add(line);
+                    if (!inEdition)
+                    {
+                        line.X1 = positon.X;
+                        line.Y1 = positon.Y;
+                        line.Stroke = Brushes.Black;
+                        workField.Children.Add(line);
+                    }
                     break;
 
                 case "ELLIPSE":
@@ -70,6 +75,7 @@ namespace PixelPaint
                         Canvas.SetTop(ellipse, positon.Y);
                         workField.Children.Add(ellipse);
                     }
+                    
                     break;
                 case "RECTANGLE":
                     if (!inEdition)
@@ -104,7 +110,7 @@ namespace PixelPaint
                     break;
 
                 case "LINE":
-                    if (System.Windows.Input.Mouse.LeftButton == MouseButtonState.Pressed)
+                    if (System.Windows.Input.Mouse.LeftButton == MouseButtonState.Pressed && !inEdition)
                     {
                         line.X2 = positon.X;
                         line.Y2 = positon.Y;
@@ -137,22 +143,55 @@ namespace PixelPaint
             switch (state)
             {
                 case "LINE":
+                    if (inEdition)
+                    {
+                        inEdition = false;
+                        line = new Line();
+                    }
+                    else
+                    {
+                        inEdition = true;   
+                    }
                     break;
 
                 case "ELLIPSE":
-                    inEdition = true;
-                    AdornerLayer.GetAdornerLayer(workField).Add(new ResizeAdorner(ellipse));
+                    if (inEdition)
+                    {
+                        inEdition = false;
+                        AdornerLayer adonerLayer = AdornerLayer.GetAdornerLayer(workField);
+                        if(adonerLayer != null)adonerLayer.Remove(adornerToRemove);
+                        ellipse = new Ellipse();
+                    }
+                    else
+                    {
+                        adornerToRemove = new ResizeAdorner(ellipse);
+                        inEdition = true;
+                        AdornerLayer.GetAdornerLayer(workField).Add(adornerToRemove);
+                    }
                     break;
 
                 case "RECTANGLE":
-                    inEdition = true;
-                    AdornerLayer.GetAdornerLayer(workField).Add(new ResizeAdorner(rectangle));
+                    if (inEdition)
+                    {
+                        inEdition = false;
+                        AdornerLayer adonerLayer = AdornerLayer.GetAdornerLayer(workField);
+                        if (adonerLayer != null) adonerLayer.Remove(adornerToRemove);
+                        rectangle = new Rectangle();
+                    }
+                    else
+                    {
+                        adornerToRemove = new ResizeAdorner(rectangle);
+                        inEdition = true;
+                        AdornerLayer.GetAdornerLayer(workField).Add(adornerToRemove);
+                    }
                     break;
 
                 default: break;
 
             }
         }
+
+        
 
         private void ButtonLineClicked(object sender, RoutedEventArgs e)
         {

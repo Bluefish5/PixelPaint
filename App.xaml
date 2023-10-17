@@ -4,6 +4,15 @@
              xmlns:local="clr-namespace:PixelPaint"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <Style TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"></Rectangle>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>
