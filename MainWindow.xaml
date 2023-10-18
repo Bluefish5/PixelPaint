@@ -24,6 +24,18 @@
             </Grid.RowDefinitions>
             <WrapPanel>
 
+                <StackPanel VerticalAlignment="Center" Margin="5">
+                    <Button x:Name="save" Content="Zapisz" Click="save_Click"/>
+                    <Separator Width="10"/>
+                    <!--<Button x:Name="open" Content="Wczytaj" Click="open_Click"/>-->
+                </StackPanel>
+
+                <Separator Width="100">
+                    <Separator.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </Separator.LayoutTransform>
+                </Separator>
+
                 <StackPanel>
 
                     <Label Content="Narzędzia" Foreground="White" HorizontalAlignment="Center"/>
@@ -72,8 +84,31 @@
                     </Separator.LayoutTransform>
                 </Separator>
 
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Foreground="White">Wysokość:</Label>
+                    <Label Grid.Row="0" Grid.Column="2" Foreground="White">Szerokość:</Label>
 
-                <ContentControl Panel.ZIndex="2"  Content="{Binding}"/>
+
+                    <TextBox x:Name="heightTextBox" Grid.Row="1" Grid.Column="0" Height="30" Width="100"/>
+
+                    <TextBox x:Name="widthTextBox" Grid.Row="1" Grid.Column="2" Height="30" Width="100"></TextBox>
+                    
+                    
+                </Grid>
+                
+                
+
+
+
 
 
             </WrapPanel>
